@@ -1,0 +1,36 @@
+/* Exemplo de destaque para dias com agendamentos */
+.custom-date-has-appointment {
+    background-color: #e2f0d9 !important; /* verde claro */
+    border-radius: 100%;
+}
+
+/* Responsividade básica com bootstrap classes */
+.filter-field {
+    min-width: 200px;
+    margin-left: auto; /* empurra para direita */
+}
+
+.calendar-container {
+    width: 80%;
+    max-width: 100%;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    margin-left: 2.5rem;
+}
+
+.appointment-summary {
+    padding: 1rem;
+    background-color: #e8f5e9;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 2rem;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 576px) {
+    .filter-field {
+        width: 100%;
+        margin: 1rem 0 0 0;
+    }
+}
