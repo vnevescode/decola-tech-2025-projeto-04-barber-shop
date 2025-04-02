@@ -1,0 +1,237 @@
+{
+    "clients": [
+        {
+            "id": 11110000,
+            "name": "Ana Santos",
+            "email": "ana@example.com",
+            "phone": "21922223333"
+        },
+        {
+            "id": 11110001,
+            "name": "Fernando Almeida",
+            "email": "fernando@example.com",
+            "phone": "11922334455"
+        },
+        {
+            "id": 11110002,
+            "name": "Marcela Lima",
+            "email": "marcela@example.com",
+            "phone": "21944332211"
+        },
+        {
+            "id": 11110003,
+            "name": "Pedro Rocha",
+            "email": "pedro.rocha@example.com",
+            "phone": "3199991111"
+        },
+        {
+            "id": 11110004,
+            "name": "Julia Martins",
+            "email": "julia.martins@example.com",
+            "phone": "51988887777"
+        },
+        {
+            "id": 11110005,
+            "name": "Daniel Carvalho",
+            "email": "daniel.carvalho@example.com",
+            "phone": "21955556666"
+        },
+        {
+            "id": 11110006,
+            "name": "Letícia Andrade",
+            "email": "leticia.andrade@example.com",
+            "phone": "11977778888"
+        },
+        {
+            "id": 11110007,
+            "name": "Rafael Gomes",
+            "email": "rafael.gomes@example.com",
+            "phone": "31911112222"
+        },
+        {
+            "id": 11110008,
+            "name": "Camila Ferreira",
+            "email": "camila.ferreira@example.com",
+            "phone": "2199990000"
+        },
+        {
+            "id": 11110009,
+            "name": "Lucas Moreira",
+            "email": "lucas.moreira@example.com",
+            "phone": "4190001111"
+        },
+        {
+            "id": 11110010,
+            "name": "Bruna Pereira",
+            "email": "bruna.pereira@example.com",
+            "phone": "51944443333"
+        }
+    ],
+
+    "scheduleMonth": {
+        "year": 2025,
+        "month": 5,
+        "scheduledAppointments": [
+            {
+                "id": 22220000,
+                "day": 10,
+                "startAt": "2025-05-10T09:00:00",
+                "endAt": "2025-05-10T10:00:00",
+                "clientId": 0,
+                "clientName": "João da Silva"
+            },
+            {
+                "id": 22220001,
+                "day": 10,
+                "startAt": "2025-05-10T11:00:00",
+                "endAt": "2025-05-10T12:00:00",
+                "clientId": 0,
+                "clientName": "Maria Oliveira"
+            },
+            {
+                "id": 22220002,
+                "day": 10,
+                "startAt": "2025-05-10T13:00:00",
+                "endAt": "2025-05-10T14:00:00",
+                "clientId": 0,
+                "clientName": "Carlos Souza"
+            },
+            {
+                "id": 22220003,
+                "day": 10,
+                "startAt": "2025-05-10T15:00:00",
+                "endAt": "2025-05-10T16:00:00",
+                "clientId": 11110001,
+                "clientName": "Fernando Almeida"
+            },
+            {
+                "id": 22220004,
+                "day": 11,
+                "startAt": "2025-05-11T09:00:00",
+                "endAt": "2025-05-11T10:00:00",
+                "clientId": 11110000,
+                "clientName": "Ana Santos"
+            },
+            {
+                "id": 22220005,
+                "day": 11,
+                "startAt": "2025-05-11T10:00:00",
+                "endAt": "2025-05-11T11:00:00",
+                "clientId": 0,
+                "clientName": "Beatriz Mendes"
+            },
+            {
+                "id": 22220006,
+                "day": 11,
+                "startAt": "2025-05-11T12:00:00",
+                "endAt": "2025-05-11T13:00:00",
+                "clientId": 11110002,
+                "clientName": "Marcela Lima"
+            },
+            {
+                "id": 22220007,
+                "day": 12,
+                "startAt": "2025-05-12T09:00:00",
+                "endAt": "2025-05-12T10:00:00",
+                "clientId": 11110003,
+                "clientName": "Pedro Rocha"
+            },
+            {
+                "id": 22220008,
+                "day": 12,
+                "startAt": "2025-05-12T11:00:00",
+                "endAt": "2025-05-12T12:00:00",
+                "clientId": 11110004,
+                "clientName": "Julia Martins"
+            },
+            {
+                "id": 22220009,
+                "day": 12,
+                "startAt": "2025-05-12T14:00:00",
+                "endAt": "2025-05-12T15:00:00",
+                "clientId": 11110005,
+                "clientName": "Daniel Carvalho"
+            },
+            {
+                "id": 22220010,
+                "day": 13,
+                "startAt": "2025-05-13T09:00:00",
+                "endAt": "2025-05-13T10:00:00",
+                "clientId": 0,
+                "clientName": "João da Silva"
+            },
+            {
+                "id": 22220011,
+                "day": 13,
+                "startAt": "2025-05-13T10:00:00",
+                "endAt": "2025-05-13T11:00:00",
+                "clientId": 11110006,
+                "clientName": "Letícia Andrade"
+            },
+            {
+                "id": 22220012,
+                "day": 13,
+                "startAt": "2025-05-13T15:00:00",
+                "endAt": "2025-05-13T16:00:00",
+                "clientId": 11110007,
+                "clientName": "Rafael Gomes"
+            },
+            {
+                "id": 22220013,
+                "day": 14,
+                "startAt": "2025-05-14T09:00:00",
+                "endAt": "2025-05-14T10:00:00",
+                "clientId": 11110008,
+                "clientName": "Camila Ferreira"
+            },
+            {
+                "id": 22220014,
+                "day": 14,
+                "startAt": "2025-05-14T11:00:00",
+                "endAt": "2025-05-14T12:00:00",
+                "clientId": 11110009,
+                "clientName": "Lucas Moreira"
+            },
+            {
+                "id": 22220015,
+                "day": 14,
+                "startAt": "2025-05-14T13:00:00",
+                "endAt": "2025-05-14T14:00:00",
+                "clientId": 0,
+                "clientName": "Maria Oliveira"
+            },
+            {
+                "id": 22220016,
+                "day": 15,
+                "startAt": "2025-05-15T10:00:00",
+                "endAt": "2025-05-15T11:00:00",
+                "clientId": 0,
+                "clientName": "Carlos Souza"
+            },
+            {
+                "id": 22220017,
+                "day": 15,
+                "startAt": "2025-05-15T11:00:00",
+                "endAt": "2025-05-15T12:00:00",
+                "clientId": 11110010,
+                "clientName": "Bruna Pereira"
+            },
+            {
+                "id": 22220018,
+                "day": 15,
+                "startAt": "2025-05-15T14:00:00",
+                "endAt": "2025-05-15T15:00:00",
+                "clientId": 11110000,
+                "clientName": "Ana Santos"
+            },
+            {
+                "id": 22220019,
+                "day": 15,
+                "startAt": "2025-05-15T16:00:00",
+                "endAt": "2025-05-15T17:00:00",
+                "clientId": 0,
+                "clientName": "Beatriz Mendes"
+            }
+        ]
+    }
+}
