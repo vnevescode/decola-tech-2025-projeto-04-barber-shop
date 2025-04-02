@@ -1,0 +1,61 @@
+.title-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.mat-mdc-card-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.card-title {
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+  margin-bottom: 3rem;
+}
+
+mat-toolbar {
+  background-color: #1565c0 !important;
+  color: white;
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logo-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 10px;
+  /* font-weight: bold; */
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.spacer {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+}
+
+nav a {
+  /* font-weight: bold; */
+  color: white;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 5px;
+}
+/*# sourceMappingURL=card-header.component.css.map */

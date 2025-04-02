@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "yes-no-dialog.component.scss"
+    ],
+    "names": [],
+    "file": "yes-no-dialog.component.css"
+}
