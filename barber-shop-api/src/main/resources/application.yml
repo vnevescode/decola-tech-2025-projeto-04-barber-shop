@@ -1,12 +1,12 @@
 spring:
   application:
     name: barber-shop-api
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
-  jpa:
-    hibernate:
-      ddl-auto: validate
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}  # Fallback para dev se não for passado por env
+
+jackson:
+  time-zone: America/Sao_Paulo
+
 server:
   port: 8084
+

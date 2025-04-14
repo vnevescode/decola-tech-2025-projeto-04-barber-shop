@@ -1,20 +1,26 @@
 spring:
-  application:
-    name: barber-shop-api-dev
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5434/barber_shop_test_db}
+    username: ${DB_USER:test_user}
+    password: ${DB_PASSWORD:test_password}
   jpa:
+    hibernate:
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+        jdbc:
+          time_zone: America/Sao_Paulo
   flyway:
     enabled: true
-    locations: classpath:db/migration
+    locations: classpath:db/migration-test
 
   devtools:
-    remote:
-      secret: 123
     restart:
       trigger-file: trigger.txt
 
-server:
-  port: 8084
+logging:
+  level:
+    root: INFO
+    org.flywaydb: DEBUG

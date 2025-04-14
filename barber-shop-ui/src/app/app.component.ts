@@ -1,65 +1,52 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import {
-    ActivatedRoute,
-    NavigationEnd,
-    Router,
-    RouterOutlet,
-} from '@angular/router';
-import { AsyncPipe } from '@angular/common';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { filter, map, Subscription } from 'rxjs';
-import { CardHeaderComponent } from './commons/components/card-header/card-header.component';
-import { MenuBarComponent } from './commons/components/menu-bar/menu-bar.component';
-import { LoadingService } from './services/loading.service';
-import { CommonModule } from '@angular/common';
+  trigger,
+  transition,
+  style,
+  animate,
+  query,
+} from '@angular/animations';
 
 @Component({
-    selector: 'app-root',
-    imports: [
-        RouterOutlet,
-        CardHeaderComponent,
-        MenuBarComponent,
-        MatProgressSpinnerModule,
-        AsyncPipe,
-        CommonModule,
-    ],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.scss',
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  animations: [
+    trigger('routeAnimations', [
+      transition('* <=> *', [
+        query(
+          ':enter, :leave',
+          style({ position: 'absolute', width: '100%' }),
+          { optional: true }
+        ),
+        query(':enter', [style({ opacity: 0 })], { optional: true }),
+        query(
+          ':leave',
+          [
+            style({ opacity: 1 }),
+            animate('200ms ease-out', style({ opacity: 0 })),
+          ],
+          { optional: true }
+        ),
+        query(
+          ':enter',
+          [
+            style({ opacity: 0 }),
+            animate('200ms ease-in', style({ opacity: 1 })),
+          ],
+          { optional: true }
+        ),
+      ]),
+    ]),
+  ],
 })
-export class AppComponent implements OnInit, OnDestroy {
-    title = 'barber-shop-ui';
-    loading$;
+export class AppComponent {
+  title = 'barber-shop-ui';
 
-    private routeSubscription?: Subscription;
-
-    constructor(
-        private readonly router: Router,
-        private readonly activatedRoute: ActivatedRoute,
-        public loadingService: LoadingService
-    ) {
-        this.loading$ = this.loadingService.isLoading;
-    }
-
-    ngOnDestroy(): void {
-        if (this.routeSubscription) {
-            this.routeSubscription.unsubscribe();
-        }
-    }
-
-    ngOnInit(): void {
-        this.routeSubscription = this.router.events
-            .pipe(
-                filter((event) => event instanceof NavigationEnd),
-                map(() => this.getRouteTitle(this.activatedRoute))
-            )
-            .subscribe((title) => (this.title = title));
-    }
-
-    private getRouteTitle(route: ActivatedRoute): string {
-        let child = route;
-        while (child.firstChild) {
-            child = child.firstChild;
-        }
-        return child.snapshot.data['title'] || 'Default Title';
-    }
+  getAnimation(outlet: RouterOutlet) {
+    return outlet?.activatedRouteData?.['animation'];
+  }
 }

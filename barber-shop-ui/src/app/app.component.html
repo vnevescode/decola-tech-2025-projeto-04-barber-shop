@@ -1,9 +1,7 @@
-<app-card-header></app-card-header>
-
-<app-menu-bar></app-menu-bar>
-
-<div class="loading-overlay" *ngIf="loading$ | async">
-    <mat-spinner></mat-spinner>
-</div>
-
-<router-outlet />
+<link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/>
+<main [@routeAnimations]="getAnimation(outlet)">
+  <router-outlet #outlet="outlet"></router-outlet>
+</main>

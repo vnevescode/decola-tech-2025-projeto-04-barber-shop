@@ -1,57 +1,93 @@
 package br.com.dio.barber_shop_api.controller;
 
-
-import br.com.dio.barber_shop_api.controller.request.SaveScheduleRequest;
-import br.com.dio.barber_shop_api.controller.response.SaveScheduleResponse;
-import br.com.dio.barber_shop_api.controller.response.ScheduleAppointmentMonthResponse;
-import br.com.dio.barber_shop_api.mapper.IScheduleMapper;
-import br.com.dio.barber_shop_api.service.IScheduleService;
-import br.com.dio.barber_shop_api.service.query.IScheduleQueryService;
+import br.com.dio.barber_shop_api.controller.doc.ScheduleControllerDoc;
+import br.com.dio.barber_shop_api.controller.request.ScheduleRequest;
+import br.com.dio.barber_shop_api.controller.response.ScheduleResponse;
+import br.com.dio.barber_shop_api.service.ScheduleService;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
-import java.time.YearMonth;
+import org.springframework.data.domain.Pageable;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.UUID;
 
-import static java.time.ZoneOffset.UTC;
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
 
+@Slf4j
 @RestController
-@RequestMapping("schedules")
-@AllArgsConstructor
-public class ScheduleController {
+@RequestMapping("/schedules")
+@RequiredArgsConstructor
+public class ScheduleController implements ScheduleControllerDoc {
 
-    private final IScheduleService service;
-    private final IScheduleQueryService queryService;
-    private final IScheduleMapper mapper;
+    private final ScheduleService scheduleService;
 
+    @Override
     @PostMapping
-    @ResponseStatus(CREATED)
-    SaveScheduleResponse save(@RequestBody @Valid SaveScheduleRequest request){
-        var entity = mapper.toEntity(request);
-        service.save(entity);
-        return mapper.toSaveResponse(entity);
+    public ScheduleResponse create(@RequestBody @Valid ScheduleRequest request) {
+        log.info("POST /schedules | clientId={}, haircutTypeId={}, startAt={}", request.clientId(), request.haircutTypeId(), request.startAt());
+        return scheduleService.create(request);
     }
 
-    @DeleteMapping("{id}")
-    @ResponseStatus(NO_CONTENT)
-    void delete(@PathVariable final long id){
-        service.delete(id);
+    @Override
+    @GetMapping
+    public List<ScheduleResponse> getAll() {
+        log.info("GET /schedules");
+        return scheduleService.getAll();
     }
 
-    @GetMapping("{year}/{month}")
-    ScheduleAppointmentMonthResponse listMonth(@PathVariable final int year, @PathVariable final int month){
-        var yearMonth = YearMonth.of(year, month);
-        var startAt = yearMonth.atDay(1)
-                .atTime(0, 0, 0, 0)
-                .atOffset(UTC);
-        var endAt = yearMonth.atEndOfMonth()
-                .atTime(23, 59, 59, 999_999_999)
-                .atOffset(UTC);
-        var entities = queryService.findInMonth(startAt, endAt);
-        return mapper.toMonthResponse(year, month, entities);
+    @Override
+    @GetMapping("/paged")
+    public Page<ScheduleResponse> getAllPageable(Pageable pageable) {
+        log.info("GET /schedules/paged | page: {}", pageable.getPageNumber());
+        return scheduleService.getAllPageable(pageable);
+    }
+
+    @Override
+    @GetMapping("/month")
+    public List<ScheduleResponse> findMonth(
+            @RequestParam OffsetDateTime start,
+            @RequestParam OffsetDateTime end
+    ) {
+        log.info("GET /schedules/month | start={}, end={}", start, end);
+        return scheduleService.findMonth(start, end);
+    }
+
+    @Override
+    @GetMapping("/client/{clientId}/history")
+    public List<ScheduleResponse> findClientHistory(@PathVariable UUID clientId) {
+        log.info("GET /schedules/history/{}", clientId);
+        return scheduleService.findClientHistory(clientId);
     }
 
 
+    @Override
+    @GetMapping("/client/{clientId}/upcoming")
+    public List<ScheduleResponse> findClientUpcoming(@PathVariable UUID clientId) {
+        log.info("GET /schedules/upcoming/{}", clientId);
+        return scheduleService.findClientUpcoming(clientId);
+    }
+
+    @Override
+    @GetMapping("/admin-filter")
+    public List<ScheduleResponse> adminFilter(
+            @RequestParam boolean confirmed,
+            @RequestParam boolean canceled,
+            @RequestParam OffsetDateTime start,
+            @RequestParam OffsetDateTime end,
+            @RequestParam UUID haircutTypeId
+    ) {
+        log.info("GET /schedules/admin-filter | confirmed={}, canceled={}, haircutTypeId={}", confirmed, canceled, haircutTypeId);
+        return scheduleService.adminFilter(confirmed, canceled, start, end, haircutTypeId);
+    }
+
+    @PatchMapping("/{id}/confirm")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ScheduleResponse confirm(@PathVariable UUID id) {
+        log.info("PATCH /schedules/{}/confirm", id);
+        return scheduleService.confirm(id);
+    }
 }

@@ -1,29 +1,36 @@
 import { Routes } from '@angular/router';
-import { EditClientComponent } from './clients/edit-client/edit-client.component';
-import { NewClientComponent } from './clients/new-client/new-client.component';
-import { ListClientsComponent } from './clients/list-clients/list-clients.component';
-import { SchedulesMonthComponent } from './schedules/schedules-month/schedules-month.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { RoleUserGuard } from './core/guards/role-user.guard';
+import { RoleAdminGuard } from './core/guards/role-admin.guard';
 
 export const routes: Routes = [
-    {
-        path: 'clients/edit-client/:id',
-        component: EditClientComponent,
-        data: { title: 'Atualizar Cliente' },
-    },
-    {
-        path: 'clients/new-client',
-        component: NewClientComponent,
-        data: { title: 'Cadastrar Cliente' },
-    },
-    {
-        path: 'clients/list',
-        component: ListClientsComponent,
-        data: { title: 'Clientes Cadastrados' },
-    },
-    {
-        path: 'schedules/month',
-        component: SchedulesMonthComponent,
-        data: { title: 'Agendamentos' },
-    },
-    { path: '**', redirectTo: 'schedules/month' },
+  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./pages/auth/auth.routes').then((m) => m.AUTH_ROUTES),
+  },
+  {
+    path: 'onboarding',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./pages/onboarding/onboarding.routes').then(
+        (m) => m.ONBOARDING_ROUTES
+      ),
+  },
+  {
+    path: 'dashboard',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./pages/dashboard/dashboard.routes').then(
+        (m) => m.DASHBOARD_ROUTES
+      ),
+  },
+  {
+    path: 'admin',
+    canActivate: [AuthGuard, RoleAdminGuard],
+    loadChildren: () =>
+      import('./pages/admin/admin.routes').then((m) => m.ADMIN_ROUTES),
+  },
+  { path: '**', redirectTo: 'auth/login' },
 ];

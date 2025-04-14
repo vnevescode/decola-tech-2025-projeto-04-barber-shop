@@ -1,0 +1,39 @@
+<div class="onboarding-container">
+  <mat-card>
+    <mat-card-title>Complete seu Cadastro</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Nome Completo</mat-label>
+          <input matInput formControlName="name" />
+          <mat-error *ngIf="clientForm.get('name')?.invalid">
+            Nome obrigatório (mínimo 2 caracteres)
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Telefone</mat-label>
+          <input matInput formControlName="phone" maxlength="11" />
+          <mat-error *ngIf="clientForm.get('phone')?.invalid">
+            Telefone inválido (apenas números, 10 ou 11 dígitos)
+          </mat-error>
+        </mat-form-field>
+
+        <div class="button-group">
+          <button mat-button color="warn" (click)="goBack()" type="button">
+            <mat-icon>arrow_back</mat-icon> Voltar
+          </button>
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="clientForm.invalid"
+          >
+            Salvar
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
