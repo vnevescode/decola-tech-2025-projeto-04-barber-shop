@@ -8,6 +8,9 @@ Projeto do Decola Tech Avanade 2025 do Barber Shop. O front end em Angular+19 e 
 
 Sistema completo de agendamento e gerenciamento para uma barbearia. A solução inclui um backend robusto com Spring Boot 3.2 e um frontend moderno desenvolvido com Angular 19.
 
+![Projeto_barbearia_Gif](https://github.com/user-attachments/assets/008c6ca7-1795-4aeb-ace8-3f8f0fd88cd2)
+
+
 ---
 
 ## 📑 Índice
