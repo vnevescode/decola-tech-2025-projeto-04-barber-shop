@@ -1,0 +1,76 @@
+<div
+  class="register-container"
+  [@fadeInScale]
+  [@shakeAnimation]="shake ? 'shake' : 'none'"
+>
+  <mat-card class="register-card">
+    <mat-card-title>Crie sua conta ✨</mat-card-title>
+    <mat-card-subtitle>Preencha seus dados para começar</mat-card-subtitle>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="register-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" />
+        <mat-error *ngIf="form.get('email')?.invalid">Email inválido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          formControlName="password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hidePassword = !hidePassword"
+        >
+          <mat-icon>{{
+            hidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+        <mat-error *ngIf="form.get('password')?.invalid">
+          Senha deve ter ao menos 6 caracteres
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Confirmar Senha</mat-label>
+        <input
+          matInput
+          [type]="hideConfirm ? 'password' : 'text'"
+          formControlName="confirmPassword"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hideConfirm = !hideConfirm"
+        >
+          <mat-icon>{{
+            hideConfirm ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+        <mat-error *ngIf="form.errors?.['mismatch']">
+          As senhas não coincidem
+        </mat-error>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+        class="register-button"
+      >
+        Registrar
+      </button>
+
+      <button mat-button routerLink="/auth/login" class="login-link">
+        Já tem uma conta? Entrar
+      </button>
+    </form>
+  </mat-card>
+</div>

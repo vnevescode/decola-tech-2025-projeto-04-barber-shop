@@ -1,0 +1,53 @@
+<div class="login-container">
+  <mat-card
+    class="login-card"
+    [@fadeInScale]
+    [@shakeAnimation]="shake ? 'shake' : 'none'"
+  >
+    <mat-card-title>Bem-vindo de volta 👋</mat-card-title>
+    <mat-card-subtitle>Entre para agendar seu corte</mat-card-subtitle>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" />
+        <mat-error *ngIf="form.get('email')?.invalid">Email inválido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          formControlName="password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          type="button"
+          [attr.aria-label]="'Mostrar senha'"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+        <mat-error *ngIf="form.get('password')?.invalid"
+          >Senha obrigatória</mat-error
+        >
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+        class="login-button"
+      >
+        Entrar
+      </button>
+
+      <button mat-button routerLink="/auth/register" class="register-link">
+        Criar Conta
+      </button>
+    </form>
+  </mat-card>
+</div>

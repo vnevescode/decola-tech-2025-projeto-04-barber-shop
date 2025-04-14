@@ -1,0 +1,30 @@
+<div class="auth-container">
+  <mat-card>
+    <mat-card-title>Login</mat-card-title>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+        <mat-error *ngIf="form.get('email')?.invalid">Email inválido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Senha</mat-label>
+        <input matInput type="password" formControlName="password" />
+        <mat-error *ngIf="form.get('password')?.invalid"
+          >Senha obrigatória</mat-error
+        >
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Entrar
+      </button>
+      <button mat-button routerLink="/register">Criar Conta</button>
+    </form>
+  </mat-card>
+</div>

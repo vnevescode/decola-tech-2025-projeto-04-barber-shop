@@ -1,0 +1,56 @@
+<div class="dashboard-container" [@fadeIn]>
+  <mat-card class="dashboard-card">
+    <mat-card-title>Agendar Corte</mat-card-title>
+    <mat-card-subtitle>Escolha uma data no calendário</mat-card-subtitle>
+
+    <div class="calendar-wrapper">
+      <mwl-calendar-month-view
+        [viewDate]="viewDate"
+        [activeDayIsOpen]="true"
+        (dayClicked)="onDateSelected($event.day.date)"
+      ></mwl-calendar-month-view>
+    </div>
+
+    <form
+      [formGroup]="scheduleForm"
+      (ngSubmit)="openConfirmDialog()"
+      class="dashboard-form"
+    >
+      <mat-form-field
+        appearance="outline"
+        class="full-width"
+        *ngIf="selectedDate"
+      >
+        <mat-label>Horário</mat-label>
+        <mat-select formControlName="time">
+          <mat-option *ngFor="let time of availableTimes" [value]="time">
+            {{ time }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="outline"
+        class="full-width"
+        *ngIf="selectedDate"
+      >
+        <mat-label>Tipo de Corte</mat-label>
+        <mat-select formControlName="haircutTypeId">
+          <mat-option value="uuid-tipo1">Corte Clássico</mat-option>
+          <mat-option value="uuid-tipo2">Barba</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="scheduleForm.invalid"
+        class="full-width"
+        *ngIf="selectedDate"
+      >
+        Agendar
+      </button>
+    </form>
+  </mat-card>
+</div>

@@ -1,0 +1,40 @@
+<div class="auth-container">
+  <mat-card>
+    <mat-card-title>Crie sua conta</mat-card-title>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+        <mat-error *ngIf="form.get('email')?.invalid">
+          Email inválido
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Senha</mat-label>
+        <input matInput type="password" formControlName="password" />
+        <mat-error *ngIf="form.get('password')?.invalid">
+          Senha inválida
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Confirmar senha</mat-label>
+        <input matInput type="password" formControlName="confirmPassword" />
+        <mat-error *ngIf="form.hasError('mismatch')">
+          As senhas não coincidem
+        </mat-error>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Registrar
+      </button>
+      <button mat-button routerLink="/login">Voltar ao login</button>
+    </form>
+  </mat-card>
+</div>

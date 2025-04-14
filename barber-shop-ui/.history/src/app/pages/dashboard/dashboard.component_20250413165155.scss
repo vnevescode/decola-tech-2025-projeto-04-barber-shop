@@ -1,0 +1,10 @@
+.dashboard-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 5rem;
+
+  mat-card {
+    width: 500px;
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,104 @@
+<div class="admin-container">
+  <mat-card class="admin-card">
+    <mat-card-title>Administração de Agendamentos</mat-card-title>
+
+    <!-- Filtros -->
+    <form
+      [formGroup]="filterForm"
+      (ngSubmit)="onFilterSubmit()"
+      class="filter-form"
+    >
+      <div class="filter-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Status Confirmado</mat-label>
+          <mat-select formControlName="confirmed">
+            <mat-option [value]="true">Sim</mat-option>
+            <mat-option [value]="false">Não</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Status Cancelado</mat-label>
+          <mat-select formControlName="canceled">
+            <mat-option [value]="true">Sim</mat-option>
+            <mat-option [value]="false">Não</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="filter-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Data Inicial</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerStart"
+            formControlName="start"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="pickerStart"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #pickerStart></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Data Final</mat-label>
+          <input matInput [matDatepicker]="pickerEnd" formControlName="end" />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="pickerEnd"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #pickerEnd></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="filter-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Tipo de Corte</mat-label>
+          <mat-select formControlName="haircutTypeId">
+            <mat-option *ngFor="let type of haircutTypes" [value]="type.id">
+              {{ type.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <button mat-flat-button color="primary" type="submit">
+        Aplicar Filtros
+      </button>
+    </form>
+
+    <div *ngIf="schedules.length === 0">
+      <p>Nenhum agendamento encontrado.</p>
+    </div>
+
+    <div *ngFor="let schedule of schedules" class="schedule-item">
+      <div class="schedule-info">
+        <p><strong>Cliente:</strong> {{ schedule.clientName }}</p>
+        <p><strong>Corte:</strong> {{ schedule.haircutName }}</p>
+        <p>
+          <strong>Início:</strong> {{ schedule.startAt | date : "short" }} -
+          <strong>Fim:</strong> {{ schedule.endAt | date : "shortTime" }}
+        </p>
+      </div>
+
+      <div class="schedule-actions">
+        <mat-icon
+          *ngIf="schedule.confirmed"
+          class="confirmed"
+          aria-label="Confirmado"
+        >
+          check_circle
+        </mat-icon>
+        <button
+          mat-icon-button
+          *ngIf="!schedule.confirmed"
+          (click)="confirmSchedule(schedule.id)"
+          aria-label="Confirmar"
+        >
+          <mat-icon color="primary">hourglass_bottom</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card>
+</div>

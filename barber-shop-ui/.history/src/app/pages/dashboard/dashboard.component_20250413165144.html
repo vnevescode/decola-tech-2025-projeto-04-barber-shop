@@ -1,0 +1,46 @@
+<div class="dashboard-container">
+  <mat-card>
+    <mat-card-title>Agendar Horário</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+          <mat-label>Data</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="date"
+            [min]="minDate"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Horário</mat-label>
+          <input matInput type="time" formControlName="time" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Tipo de Corte</mat-label>
+          <mat-select formControlName="haircutTypeId" required>
+            <mat-option value="uuid-tipo1">Corte Clássico</mat-option>
+            <mat-option value="uuid-tipo2">Barba</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="scheduleForm.invalid"
+        >
+          Agendar
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

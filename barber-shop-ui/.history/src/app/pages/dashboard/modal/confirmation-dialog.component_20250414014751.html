@@ -1,0 +1,12 @@
+<div class="modal-container">
+  <h2>Confirmar Agendamento</h2>
+  <p><strong>Início:</strong> {{ data.startAt }}</p>
+  <p><strong>Término:</strong> {{ data.endAt }}</p>
+  <p><strong>Tipo de Corte:</strong> {{ data.haircutName }}</p>
+  <p><strong>Valor do Corte:</strong> R${{ data.haircutPrice }}</p>
+
+  <div class="modal-actions">
+    <button mat-button color="primary" (click)="confirm()">Confirmar</button>
+    <button mat-button color="warn" (click)="cancel()">Cancelar</button>
+  </div>
+</div>
