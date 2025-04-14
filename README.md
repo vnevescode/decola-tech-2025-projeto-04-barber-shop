@@ -237,6 +237,10 @@ classDiagram
 - Task customizada: ./gradlew test para rodar os testes
 - Cobertura gerada automaticamente em build/reports/jacoco/test/html/index.html
 
+### Cobertura de testes ( Unitários e de Integração ) dados pelo relatório do Jacoco :
+
+![image](https://github.com/user-attachments/assets/1de11000-207d-4b36-b039-a1c19eb1d940)
+
 ---
 
 ## 💇‍♂️ Barber Shop UI (Frontend)
