@@ -1,65 +1,93 @@
 package br.com.dio.barber_shop_api.controller;
 
-
-import br.com.dio.barber_shop_api.controller.request.SaveClientRequest;
-import br.com.dio.barber_shop_api.controller.request.UpdateClientRequest;
-import br.com.dio.barber_shop_api.controller.response.ClientDetailResponse;
-import br.com.dio.barber_shop_api.controller.response.ListClientResponse;
-import br.com.dio.barber_shop_api.controller.response.SaveClientResponse;
-import br.com.dio.barber_shop_api.controller.response.UpdateClientResponse;
-import br.com.dio.barber_shop_api.mapper.IClientMapper;
-import br.com.dio.barber_shop_api.service.IClientService;
-import br.com.dio.barber_shop_api.service.query.IClientQueryService;
+import br.com.dio.barber_shop_api.controller.doc.ClientControllerDoc;
+import br.com.dio.barber_shop_api.controller.request.ClientRequest;
+import br.com.dio.barber_shop_api.controller.response.ClientResponse;
+import br.com.dio.barber_shop_api.entity.UserEntity;
+import br.com.dio.barber_shop_api.service.ClientService;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-
+@Slf4j
 @RestController
-@RequestMapping("clients")
-@AllArgsConstructor
-public class ClientController {
+@RequestMapping("/clients")
+@RequiredArgsConstructor
+public class ClientController implements ClientControllerDoc {
+    private final ClientService clientService;
 
-    private final IClientService service;
-    private final IClientQueryService queryService;
-    private final IClientMapper mapper;
-
+    @Override
     @PostMapping
-    @ResponseStatus(CREATED)
-    SaveClientResponse save(@RequestBody @Valid final SaveClientRequest request){
-        var entity = mapper.toEntity(request);
-        service.save(entity);
-        return mapper.toSaveResponse(entity);
+    public ClientResponse create(@RequestBody @Valid ClientRequest request) {
+        log.info("[POST] /clients - Criando cliente com dados: {}", request);
+        return clientService.create(request);
     }
 
-    @PutMapping("{id}")
-    UpdateClientResponse update(@PathVariable final long id, @RequestBody @Valid final UpdateClientRequest request){
-        var entity = mapper.toEntity(id, request);
-        service.update(entity);
-        return mapper.toUpdateResponse(entity);
+    @Override
+    @GetMapping("/{id}")
+    public ClientResponse getById(@PathVariable UUID id) {
+        log.info("[GET] /clients/{} - Buscando cliente por ID", id);
+        return clientService.getById(id);
     }
 
-    @DeleteMapping("{id}")
-    @ResponseStatus(NO_CONTENT)
-    void delete(@PathVariable final long id){
-        service.delete(id);
+    @Override
+    @GetMapping("/user/{userId}")
+    public ClientResponse getByUserId(@PathVariable UUID userId) {
+        log.info("[GET] /clients/user/{} - Buscando cliente por User ID", userId);
+        return clientService.getByUserId(userId);
     }
 
-    @GetMapping("{id}")
-    ClientDetailResponse findById(@PathVariable final long id){
-        var entity = queryService.findById(id);
-        return mapper.toDetailResponse(entity);
-    }
-
+    @Override
     @GetMapping
-    List<ListClientResponse> list(){
-        var entities = queryService.list();
-        return mapper.toListResponse(entities);
+    public List<ClientResponse> getAll() {
+        log.info("[GET] /clients - Listando todos os clientes");
+        return clientService.getAll();
     }
 
+    @Override
+    @GetMapping("/search")
+    public List<ClientResponse> search(@RequestParam String term) {
+        log.info("[GET] /clients/search - Buscando clientes com termo: {}", term);
+        return clientService.search(term);
+    }
 
+    @Override
+    @GetMapping("/paged")
+    public org.springframework.data.domain.Page<ClientResponse> getAllPaged(Pageable pageable) {
+        log.info("[GET] /clients/paged - Listando clientes paginados");
+        return clientService.getAllPageable(pageable);
+    }
+
+    @Override
+    @GetMapping("/search-paged")
+    public org.springframework.data.domain.Page<ClientResponse> searchPaged(@RequestParam String term, Pageable pageable) {
+        log.info("[GET] /clients/search-paged - Buscando clientes com termo: {} paginado", term);
+        return clientService.searchPageable(term, pageable);
+    }
+
+    @Override
+    @PutMapping("/{id}")
+    public ClientResponse update(@PathVariable UUID id, @RequestBody @Valid ClientRequest request) {
+        log.info("[PUT] /clients/{} - Atualizando cliente com dados: {}", id, request);
+        return clientService.update(id, request);
+    }
+
+    @Override
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable UUID id) {
+        log.info("[DELETE] /clients/{} - Deletando cliente", id);
+        clientService.delete(id);
+    }
+
+    @GetMapping("/me")
+    public ClientResponse getCurrentClient(@AuthenticationPrincipal UserEntity user) {
+        log.info("[GET] /clients/me - Buscando cliente do usuário autenticado: {}", user.getEmail());
+        return clientService.getByUserId(user.getId());
+    }
 }

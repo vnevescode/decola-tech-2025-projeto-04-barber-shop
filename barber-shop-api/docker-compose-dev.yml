@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  barber-shop-api-dev-db:
+    image: postgres:13.4
+    container_name: barber-shop-api-dev-db
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata-test:/var/lib/postgresql/data
+    networks:
+      - barber-shop-net
+
+volumes:
+  pgdata-test:
+
+networks:
+  barber-shop-net:
