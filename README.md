@@ -18,6 +18,7 @@ Sistema completo de agendamento e gerenciamento para uma barbearia. A solução 
   - [✅ Funcionalidades do Backend](#funcionalidades-do-backend)
   - [📂 Estrutura de Pastas - Backend](#estrutura-de-pastas---backend)
   - [🔐 Segurança e JWT](#segurança-e-jwt)
+  - [🗂️ Diagrama de classes do Banco de dados]
   - [📊 Swagger UI](#swagger-ui)
   - [🧪 Testes e Jacoco](#testes-e-jacoco)
   - [📁 Migrations com Flyway](#migrations-com-flyway)
@@ -172,7 +173,48 @@ Authorization: Bearer <SEU_TOKEN_JWT>
 
 ```
 ---
+## 🗂️ Diagrama de Classe do Modelo ER do Banco
 
+```mermaid
+
+classDiagram
+    class tb_users {
+        +id: UUID
+        +email: VARCHAR(255)
+        +password: VARCHAR(255)
+        +role: VARCHAR(50)
+    }
+
+    class tb_clients {
+        +id: UUID
+        +name: VARCHAR(100)
+        +phone: VARCHAR(20)
+        +user_id: UUID
+    }
+
+    class tb_haircut_types {
+        +id: UUID
+        +name: VARCHAR(100)
+        +price: NUMERIC(10,2)
+    }
+
+    class tb_schedules {
+        +id: UUID
+        +start_at: TIMESTAMP
+        +end_at: TIMESTAMP
+        +confirmed: BOOLEAN
+        +canceled: BOOLEAN
+        +client_id: UUID
+        +haircut_type_id: UUID
+    }
+
+    %% Relações
+    tb_users "1" --> "0..1" tb_clients : Tem
+    tb_clients "1" --> "*" tb_schedules : Realiza
+    tb_haircut_types "1" --> "*" tb_schedules : É selecionado
+```
+
+---
 ## 📌 Informações contidas no token (claims):
 
 - sub: e-mail do usuário
